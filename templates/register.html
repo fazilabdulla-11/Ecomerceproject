@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}All Products{% endblock %}
+
+{% block content %}
+
+<form action="" method="post">
+
+     {% csrf_token %}
+
+<h1>signup</h1>
+<p style="color: red;">{{ error }}</p>
+<input type="text" name="first_name" placeholder="First name"> <br><br>
+<input type="text" name="last_name" placeholder="Last name"><br><br>
+<input type="text" name="username" placeholder="username">
+<input type="text" name="email" placeholder="email address">
+<input type="text" name="password" placeholder="password"><br><br>
+<input type="text" name="confirmpassword" placeholder="confirm password">
+
+<button>submit</button>
+
+
+
+</form>
+
+
+
+
+
+
+
+{% endblock %}
