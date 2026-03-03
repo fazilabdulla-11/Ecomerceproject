@@ -30,6 +30,8 @@ urlpatterns = [
     path('login/',views.sign_in,name='login'),
     path('signup/',views.register,name='signup'),
     path('logout/',views.sign_out,name='logout'),
+    path('product_details/<int:id>/',views.product_details,name='product_details'),
+    path('womens_details/',views.womens_details,name='womens_details.html'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

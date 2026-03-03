@@ -18,7 +18,8 @@
 					{% for i in products %}
 						<div class="col-lg-3 mb-4 text-center">
 							<div class="product-entry border">
-								<a href="#" class="prod-img" >
+								<a href="{% url 'product_details' i.id %}" class="prod-img" >
+								<a href="{% url 'womens_details' %}"></a>	
 									<img src="{{ i.image.url}}" class="img-fluid" alt="Free html5 bootstrap 4 template" style="height:250px ; object-fit: cover; width: 100%;">
 								</a>
 								<div class="desc">

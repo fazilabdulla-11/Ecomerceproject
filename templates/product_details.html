@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
+
+
+
+<h1 style="margin-left: 400px;">{{p.name}} details</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <img src="{{ p.image.url}}" style="width:100%;height: 100%;margin-top:20px;">
+
+        </div>
+        <div class="col-6">
+
+            
+<h2 style="margin-top: 50px;">
+name: {{ p.name }} <br><br> 
+brand: {{p.brand}} <br><br>
+category: {{ p.category}} <br><br>
+price:$ {{ p.price }} <br><br> 
+about product: {{ p.description}} <br><br>
+gender: {{ p.gender}} <br><br>
+
+
+</h2>
+
+        </div>
+    </div>
+    
+</div>
+
+
+
+
+
+
+
+{% endblock %}

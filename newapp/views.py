@@ -55,3 +55,15 @@ def register(request):
 def sign_out(request):
     logout(request)
     return redirect('home')
+
+def product_details(request,id):
+    data=Product.objects.get(id=id)                          
+    
+    return render(request,'product_details.html',{'p':data})    
+
+
+
+def womens_details(request):
+    data=Product.objects.all().order_by('-created_at')
+
+    return render(request,'womens_details.html',{'p':data})
