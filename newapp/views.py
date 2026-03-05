@@ -5,6 +5,9 @@ from newapp.models import Product
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 
+from django.core.paginator import Paginator
+from django.db.models import Q
+
 # Create your views here.
 
 def index(request):
@@ -12,8 +15,18 @@ def index(request):
     return render(request,'index.html', {'products': data})
 
 def all_products(request):
+    
+
     data=Product.objects.all().order_by('-created_at')
-    return render(request,'all_products.html', {'products': data})  
+    qry = request.GET.get('q')
+
+    if qry:
+        data=Product.objects.filter(Q(name__icontains=qry)|Q(description__icontains=qry)).order_by('-created_at')
+
+    paginator = Paginator(data, 5)  # Show 25 contacts per page.
+    page_number = request.GET.get("page")
+    data1 = paginator.get_page(page_number)
+    return render(request,'all_products.html', {'page_obj': data1})  
 
 def sign_in(request):
     if request.method == 'POST':
@@ -67,3 +80,7 @@ def womens_details(request):
     data=Product.objects.all().order_by('-created_at')
 
     return render(request,'womens_details.html',{'p':data})
+
+
+    
+

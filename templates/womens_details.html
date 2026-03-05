@@ -1,11 +1,48 @@
 {% extends 'base.html' %}
-{% block title %}Home{% endblock %}
+
+{% block title %}All Products{% endblock %}
+
 {% block content %}
+{% load static %}
+    <div class="colorlib-product">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-8 offset-sm-2 text-center colorlib-heading">
+					
+					</div>
+				</div>
+				<div class="row row-pb-md">
+							
+								
+					<div class="w-100"></div>
+					{% for i in p %}
+						<div class="col-lg-3 mb-4 text-center">
+							<div class="product-entry border">
+								<a href="{% url 'product_details' i.id %}" class="prod-img" >
+									
+									<img src="{{ i.image.url}}" class="img-fluid" alt="Free html5 bootstrap 4 template" style="height:250px ; object-fit: cover; width: 100%;">
+								</a>
+								<div class="desc">
+									<h2><a href="#">{{ i.name }}</a></h2>
+									<span class="price">{{ i.price }}</span>
+								</div>
+							</div>
+						</div>
+					{% endfor %}	
 
-<h1> womens details</h1>
 
 
-{% for i in products %}
-
-
+						
+					</div>
+					
+					
+					
+				
+						
+					
+				</div>
+			</div>
+	</div>
+	
+    <!-- Content for displaying all products would go here -->
 {% endblock %}
