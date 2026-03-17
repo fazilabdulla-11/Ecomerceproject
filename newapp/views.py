@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 
-from newapp.models import Product
+from newapp.models import Product,Cart,Cartitem
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -77,10 +77,70 @@ def product_details(request,id):
 
 
 def womens_details(request):
-    data=Product.objects.all().order_by('-created_at')
+    data=Product.objects.filter(Q(gender__contains="F")|Q(gender__contains="U")).order_by('-created_at')
 
     return render(request,'womens_details.html',{'p':data})
 
+
+def cartid(request):
+    cid=request.session.session_key
+    if not cid:
+        request.session.create()
+        cid=request.session.session_key
+    return cid
+
+def add_to_cart(request, p_id):
+    product=Product.objects.get(id=p_id)
+    c_id=cartid(request)
+    try:
+        cart =Cart.objects.get(cartid=c_id)
+    
+    except:
+        cart=Cart.objects.create(cartid=c_id)
+        cart.save()
+
+    try:
+        cart_item=Cartitem.objects.filter(CART=cart,PRODUCT=product).first()
+    
+        cart_item.quantity += 1
+        cart_item.save()
+    except:
+        cart_item=Cartitem.objects.create(CART=cart,PRODUCT=product,quantity=1)
+        cart_item.save()
+    
+
+    return redirect('cart_details')
+
+def minimize_from_cart(request,p_id):
+    product=Product.objects.get(id=p_id)
+    c_id=cartid(request)
+    try:
+         cart =Cart.objects.get(cartid=c_id)
+    
+       
+    except:
+        cart=Cart.objects.create(cartid=c_id)
+        cart.save()
+
+    try:
+        cart_item=Cartitem.objects.filter(CART=cart,PRODUCT=product).first()
+
+        cart_item.quantity -= 1
+        cart_item.save()
+    except:
+        cart_item=Cartitem.objects.create(CART=cart,PRODUCT=product,quantity=1)
+        cart_item.save()    
+
+
+
+    return redirect('cart_details')       
+
+
+    
+
+def cart_details(request):
+    cart_items = Cartitem.objects.filter(CART__cartid=cartid(request))
+    return render(request,'cart_details.html', {'cart_items': cart_items})
 
     
 

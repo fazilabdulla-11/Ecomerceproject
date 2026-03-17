@@ -10,8 +10,8 @@
         <div class="col-6">
             <img src="{{ p.image.url}}" style="width:100%;height: 100%;margin-top:20px;">
             <button style="margin-left: 400px;">Buy</button>
-            <button>Add to cart</button>
-
+            <a href="{% url 'add_to_cart' p.id %}"><button>Add to cart</button></a>
+</a>
         </div>
         <div class="col-6">
 

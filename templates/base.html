@@ -75,6 +75,7 @@
 								</li>
 								<li><a href="/womens_details/">Women</a></li>
 								<li><a href="/all_products/">all products</a></li>
+								
 								{% if user.is_authenticated %}
 									<li><a href="/logout/">Logout</a></li>
 									<li><a href="#"><b style="color: brown;">haii,</b> {{ user.first_name }} {{ user.last_name }}</a></li>
@@ -84,7 +85,7 @@
 								
 								
 								<li class="cart">
-									<a href="cart.html"><i class="icon-shopping-cart"></i> Cart [0]</a>
+									<a href="/cart_details/"><i class="icon-shopping-cart"></i> Cart [0]</a>
 									<a href="/login/"> <i class="bi bi-person-circle"></i></a>
 								</li>
 								

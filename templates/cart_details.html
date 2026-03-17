@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}All Products{% endblock %}
+
+{% block content %}
+<div style="background-color: rgb(199, 18, 18);">
+<h1 style="margin-left: 400px;color: yellow;font-weight: bold;">Your cart items</h1>
+{% for i in cart_items %}
+<div style="display: flex;">
+    <div>
+
+
+        <img src="{{ i.PRODUCT.image.url }}"
+            style="height: 200px; width: 200px;">
+    </div>
+    <div>
+        <h2 style="margin-left: 10px;margin-top: 50px;">{{ i.PRODUCT.name }}</h2>
+
+
+        <h3 style="margin-left: 20px;margin-top: 50px;">
+           <a href="/add_to_cart/{{ i.PRODUCT.id }}/"> <button >+</button></a>
+              Quantity: {{i.quantity}}
+
+             
+           <a href="/minimize_from_cart/{{ i.PRODUCT.id }}/"> <button>-</button></a>
+             
+            <button>remove</button><br><br>
+            
+        </h3>
+    </div>
+</div>
+{% endfor %}
+<button style="margin-left: 900px;">checkout</button>
+
+</div>
+
+{% endblock %}

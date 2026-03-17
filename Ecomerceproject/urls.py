@@ -32,6 +32,9 @@ urlpatterns = [
     path('logout/',views.sign_out,name='logout'),
     path('product_details/<int:id>/',views.product_details,name='product_details'),
     path('womens_details/',views.womens_details,name='womens_details.html'),
+    path('add_to_cart/<int:p_id>/',views.add_to_cart,name='add_to_cart'),
+    path('cart_details/',views.cart_details,name='cart_details'),
+    path('minimize_from_cart/<int:p_id>/',views.minimize_from_cart,name='minimize_to_cart'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
