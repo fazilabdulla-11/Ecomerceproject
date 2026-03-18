@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 
-from newapp.models import Product,Cart,Cartitem
+from newapp.models import Product,Cart,Cartitem,Adress,Order
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -114,22 +114,15 @@ def add_to_cart(request, p_id):
 def minimize_from_cart(request,p_id):
     product=Product.objects.get(id=p_id)
     c_id=cartid(request)
-    try:
-         cart =Cart.objects.get(cartid=c_id)
+    cart =Cart.objects.get(cartid=c_id)
     
-       
-    except:
-        cart=Cart.objects.create(cartid=c_id)
-        cart.save()
+    cart_item=Cartitem.objects.filter(CART=cart,PRODUCT=product).first()
+    if cart_item.quantity == 1:
+        cart_item.delete()
 
-    try:
-        cart_item=Cartitem.objects.filter(CART=cart,PRODUCT=product).first()
-
+    else:
         cart_item.quantity -= 1
-        cart_item.save()
-    except:
-        cart_item=Cartitem.objects.create(CART=cart,PRODUCT=product,quantity=1)
-        cart_item.save()    
+        cart_item.save()  
 
 
 
@@ -143,4 +136,34 @@ def cart_details(request):
     return render(request,'cart_details.html', {'cart_items': cart_items})
 
     
+def remove_cart_item(request,p_id):
+    product=Product.objects.get(id=p_id)
+    cid = cartid(request)
+    cart = Cart.objects.get(cartid=cid)
+    cartitem = Cartitem.objects.filter(CART=cart, PRODUCT=product).first()
+    if cartitem:
+        cartitem.delete()
 
+
+
+    return redirect('cart_details')
+
+
+
+def buy_item(request, p_id):
+
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        district = request.POST.get('district')
+        place = request.POST.get('place')
+        post = request.POST.get('post')
+        house = request.POST.get('house')
+        pincode = request.POST.get('pincode')
+        phone = request.POST.get('phone')
+        user = request.user
+        if not user.is_authenticated:
+            return redirect('/login/')
+        # address = Adress.objects.create(USER = user,name = name,place=place,post=post house=house, )
+
+
+    return render(request,'buy.html')

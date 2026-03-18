@@ -37,6 +37,23 @@ class Cartitem(models.Model):
     cteated_at = models.DateTimeField(auto_now_add=True)
     quantity = models.IntegerField()
     
+class Adress(models.Model):
+    USER = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    place = models.CharField(max_length=100)
+    post =models.CharField(max_length=100)
+    house = models.CharField(max_length=100)
+    pincode = models.IntegerField()
+    phone = models.IntegerField()
+
+class Order(models.Model):
+    ADDRESS = models.ForeignKey(Adress,on_delete=models.CASCADE)
+    PRODUCT = models.ForeignKey(Product,on_delete=models.CASCADE)
+    quantity = models.IntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    price = models.DecimalField(max_digits=10,decimal_places=2 )
+    order_status=models.CharField(max_length=100,default="")
+    payment_status = models.CharField(max_length=100,default="unpaid")
 
 
 
