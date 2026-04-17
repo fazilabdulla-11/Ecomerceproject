@@ -1,3 +1,5 @@
+from email.headerregistry import Address
+
 from django.shortcuts import render,redirect
 
 from newapp.models import Product,Cart,Cartitem,Adress,Order
@@ -17,7 +19,7 @@ def index(request):
 def all_products(request):
     
 
-    data=Product.objects.all().order_by('-created_at')
+    data=Product.objects.all().order_by('?')
     qry = request.GET.get('q')
 
     if qry:
@@ -164,6 +166,15 @@ def buy_item(request, p_id):
         if not user.is_authenticated:
             return redirect('/login/')
         # address = Adress.objects.create(USER = user,name = name,place=place,post=post house=house, )
+
+        print(name,district,place,post,house,pincode,phone,user)
+
+
+        address = Adress.objects.create(USER=user, name=name, place=place, post=post, house=house, pincode=pincode, phone=phone)
+        address.save()
+
+        orders = Order.objects.create(ADDRESS=address, PRODUCT=Product.objects.get(id=p_id), quantity=1, price=Product.objects.get(id=p_id).price)
+        orders.save()
 
 
     return render(request,'buy.html')
