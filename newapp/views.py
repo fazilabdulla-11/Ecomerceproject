@@ -175,6 +175,7 @@ def buy_item(request, p_id):
 
         orders = Order.objects.create(ADDRESS=address, PRODUCT=Product.objects.get(id=p_id), quantity=1, price=Product.objects.get(id=p_id).price)
         orders.save()
+        return redirect('/')
 
 
     return render(request,'buy.html')
